@@ -1,3 +1,13 @@
+
+
+# All credit due to
+@mauron85/react-native-background-geolocation
+
+# Fork purpose
+
+This is a fork to slim down the library for only specific functions (mainly remove the syncing code and server communication bit)
+
+
 # @mauron85/react-native-background-geolocation
 
 [![CircleCI](https://circleci.com/gh/mauron85/react-native-background-geolocation/tree/master.svg?style=shield)](https://circleci.com/gh/mauron85/react-native-background-geolocation/tree/master)
