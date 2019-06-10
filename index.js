@@ -217,7 +217,7 @@ var BackgroundGeolocation = {
   forceSync: function(successFn, errorFn) {
     successFn = successFn || emptyFn;
     errorFn = errorFn || emptyFn;
-    RNBackgroundGeolocation.forceSync(successFn, errorFn);
+   
   },
 
   on: function(event, callbackFn) {

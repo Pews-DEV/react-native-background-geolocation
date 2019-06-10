@@ -328,9 +328,7 @@ public class BackgroundGeolocationModule extends ReactContextBaseJavaModule impl
     }
 
     @ReactMethod
-    public void forceSync(Callback success, Callback error) {
-        facade.forceSync();
-        success.invoke();
+    public void forceSync(Callback success, Callback error) {            
     }
 
     private void sendEvent(String eventName, Object params) {
