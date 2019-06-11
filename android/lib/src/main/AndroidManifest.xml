@@ -19,6 +19,8 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.marianhello.bgloc.react" android:versionName="1.0" android:versionCode="1">
+    <application>       
+       
         <service android:enabled="true" android:exported="false" android:name="com.marianhello.bgloc.LocationServiceImpl" />
         <receiver android:enabled="true" android:exported="true" android:name="com.marianhello.bgloc.BootCompletedReceiver">
             <intent-filter>
