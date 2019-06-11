@@ -1,5 +1,15 @@
 ## Changelog
 
+
+### [0.5.2] - 2019-06-11
+### Fixed
+- Removed location providers / sqllite DAO/SQL tables for locations
+- Removed location Syncing Code
+- Removed permission requirement for SYNC_WRITE/READ
+- Removed permission requirement for Accounts 
+
+
+
 ### [0.5.2] - 2019-03-28
 ### Fixed
 - Android fix don't start service on app visibility change events fixes
