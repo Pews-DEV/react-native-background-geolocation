@@ -22,6 +22,7 @@
     <application>       
        
         <service android:enabled="true" android:exported="false" android:name="com.marianhello.bgloc.LocationServiceImpl" />
+        <service android:enabled="true" android:exported="false" android:name="com.marianhello.bgloc.react.headless.HeadlessService" />
         <receiver android:enabled="true" android:exported="true" android:name="com.marianhello.bgloc.BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -29,7 +30,6 @@
         </receiver>
     </application>
 
-    <uses-sdk android:minSdkVersion="14" />
     <uses-permission android:name="android.hardware.location" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WAKE_LOCK" />

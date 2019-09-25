@@ -5,6 +5,8 @@
   "main": "./index.js",
   "types": "./index.d.ts",
   "scripts": {
+    "link": "@mauron85/react-native-background-geolocation/scripts/postlink.js",
+    "unlink": "@mauron85/react-native-background-geolocation/scripts/postunlink.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
