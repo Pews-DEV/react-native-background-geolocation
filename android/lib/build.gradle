@@ -28,6 +28,7 @@ apply plugin: 'com.android.library'
 
 apply from: '../common/VERSIONS.gradle'
 def hasApp = findProject(':app') != null
+def hasGradle3Support = getGradle3Support()
 
 // https://hackernoon.com/android-how-to-add-gradle-dependencies-using-foreach-c4cbcc070458
 def projDependencies = [
@@ -95,4 +96,5 @@ dependencies {
     projDependencies.each {
         add(it.configuration, it.dependency)
     }
+}
 }
