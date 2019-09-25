@@ -19,7 +19,8 @@ import com.marianhello.bgloc.PluginException;
 import com.marianhello.bgloc.data.BackgroundActivity;
 import com.marianhello.bgloc.data.BackgroundLocation;
 import com.marianhello.bgloc.react.data.LocationMapper;
-
+import com.marianhello.bgloc.react.headless.HeadlessTaskRunner;
+import com.marianhello.logging.LogEntry;
 import com.marianhello.logging.LoggerManager;
 
 import org.json.JSONException;
@@ -167,18 +168,6 @@ public class BackgroundGeolocationModule extends ReactContextBaseJavaModule impl
         });
     }
 
-    @Deprecated // use checkStatus as replacement
-    @ReactMethod
-    public void isLocationEnabled(Callback success, Callback error) {
-        logger.debug("Location services enabled check");
-        try {
-            success.invoke(facade.locationServicesEnabled());
-        } catch (PluginException e) {
-            logger.error("Location service checked failed: {}", e.getMessage());
-            error.invoke(ErrorMap.from(e));
-        }
-    }
-
     @ReactMethod
     public void showLocationSettings() {
         BackgroundGeolocationFacade.showLocationSettings(getContext());
@@ -251,9 +240,9 @@ public class BackgroundGeolocationModule extends ReactContextBaseJavaModule impl
     }
 
     @ReactMethod
-    public void headlessTask(String jsFunction, Callback success, Callback error) {
+    public void registerHeadlessTask(Callback success, Callback error) {
         logger.debug("Registering headless task");
-        facade.registerHeadlessTask(jsFunction);
+        facade.registerHeadlessTask(HeadlessTaskRunner.class.getName());
         success.invoke();
     }
 

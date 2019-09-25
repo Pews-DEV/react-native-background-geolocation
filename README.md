@@ -11,6 +11,7 @@ This is a fork to slim down the library for only specific functions (mainly remo
 # @mauron85/react-native-background-geolocation
 
 [![CircleCI](https://circleci.com/gh/mauron85/react-native-background-geolocation/tree/master.svg?style=shield)](https://circleci.com/gh/mauron85/react-native-background-geolocation/tree/master)
+[![issuehunt-shield-v1](issuehunt-shield-v1.svg)](https://issuehunt.io/r/mauron85/react-native-background-geolocation/)
 
 ## We're moving
 
@@ -31,8 +32,20 @@ Instructions for how to prepare debug logs can be found in section [Debugging](#
 If you're reporting an app crash, debug logs might not contain all the necessary information about the cause of the crash.
 In that case, also provide relevant parts of output of `adb logcat` command.
 
+## Issue Hunt
+
+Fund your issues or feature request to drag attraction of developers. Checkout our [issue hunt page](https://issuehunt.io/r/mauron85/react-native-background-geolocation/issues).
+
 # Android background service issues
 There are repeatedly reported issues with some android devices not working in the background. Check if your device model is on  [dontkillmyapp list](https://dontkillmyapp.com) before you report new issue. For more information check out [dontkillmyapp.com](https://dontkillmyapp.com/problem).
+
+Another confusing fact about Android services is concept of foreground services. Foreground service in context of Android OS is different thing than background geolocation service of this plugin (they're related thought). **Plugin's background geolocation service** actually **becomes foreground service** when app is in the background. Confusing, right? :D
+
+If service wants to continue to run in the background, it must "promote" itself to `foreground service`. Foreground services must have visible notification, which is the reason, why you can't disable drawer notification.
+
+The notification can only be disabled, when app is running in the foreground, by setting config option `startForeground: false` (this is the default option), but will always be visible in the background (if service was started).
+
+Recommend you to read https://developer.android.com/about/versions/oreo/background
 
 ## Description
 React Native fork of [cordova-plugin-background-geolocation](https://github.com/mauron85/cordova-plugin-background-geolocation)
@@ -56,11 +69,11 @@ When ext is not provided then following defaults will be used:
 
 ```
 ext {
-  compileSdkVersion = 27
-  buildToolsVersion = "27.0.3"
-  targetSdkVersion = 26
+  compileSdkVersion = 28
+  buildToolsVersion = "28.0.3"
+  targetSdkVersion = 28
   minSdkVersion = 16
-  supportLibVersion = "27.1.1"
+  supportLibVersion = "28.0.0"
   googlePlayServicesVersion = "11+"
 }
 ```
@@ -75,6 +88,7 @@ compatible with this module.
 |------------------|-------------------|
 | 0.1.0 - 0.2.0    | 0.33              |
 | >=0.3.0          | >=0.47            |
+| >=0.6.0          | >=0.60            |
 
 If you are using an older version of React Native with this module some features may be buggy.
 
@@ -84,65 +98,6 @@ Add following to `android/build.gradle`
 ```
 ext {
   googlePlayServicesVersion = "9.8.0"
-}
-```
-
-### Experimental Gradle 3 support
-
-Gradle 3 support is enabled by default starting React Native v57.
-
-Support for previous versions of React Native can be enabled with following steps:
-
-1. Add following into your root `build.gradle`:
-
-```
-ext {
-    compileSdkVersion = 26
-    targetSdkVersion = 26
-    buildToolsVersion = "27.0.3"
-    supportLibVersion = "27.1.0"
-    googlePlayServicesVersion = "11.8.0"
-    gradle3EXPERIMENTAL = "yes"
-}
-```
-
-2. Add Google maven repository into allprojects -> repositories
-
-```
-maven { url 'https://maven.google.com' }
-```
-
-3. Edit `android/app/build.gradle`
-
-```
-android {
-...
-    compileSdkVersion 26
-    buildToolsVersion "27.0.3"
-...
-}
-```
-
-#### Android Oreo
-
-Android Oreo support is enabled by default starting React Native v57.
-
-You can enable experimental Oreo support for older version by adding following into root build.gradle:
-
-```
-allprojects {
-  repositories {
-    maven { url 'https://maven.google.com' }
-  }
-}
-
-ext {
-  compileSdkVersion = 26
-  targetSdkVersion = 26
-  buildToolsVersion = "26.0.2"
-  supportLibVersion = "26.1.0"
-  googlePlayServicesVersion = "11.8.0"
-  oreoEXPERIMENTAL = "yes"
 }
 ```
 
@@ -283,10 +238,11 @@ yarn add @mauron85/react-native-background-geolocation
 
 ### Automatic setup
 
-Link your native dependencies
+Since version 0.60 React Native does linking of modules [automatically](https://github.com/react-native-community/cli/blob/master/docs/autolinking.md). However it does it only for single module.
+As plugin depends on additional 'common' module, it is required to link it with:
 
 ```
-react-native link @mauron85/react-native-background-geolocation
+node ./node_modules/@mauron85/react-native-background-geolocation/scripts/postlink.js
 ```
 
 ### Manual setup
@@ -409,7 +365,7 @@ BackgroundGeolocation.configure({
 
 In this case new configuration options will be merged with stored configuration options and changes will be applied immediately.
 
-**Important:** Because configuration options are applied partially, it's not possible to reset option to default value just by emitting it's key name and calling `configure` method. To reset configuration option to the default value, it's key must be set to `null`!
+**Important:** Because configuration options are applied partially, it's not possible to reset option to default value just by omitting it's key name and calling `configure` method. To reset configuration option to the default value, it's key must be set to `null`!
 
 ```
 // Example: reset postTemplate to default
@@ -468,19 +424,6 @@ Error codes:
 | 1     | PERMISSION_DENIED    | Request failed due missing permissions                                   |
 | 2     | LOCATION_UNAVAILABLE | Internal source of location returned an internal error                   |
 | 3     | TIMEOUT              | Timeout defined by `option.timeout was exceeded                          |
-
-
-### isLocationEnabled(success, fail)
-Deprecated: This method is deprecated and will be removed in next major version.
-Use `checkStatus` as replacement.
-
-Platform: iOS, Android
-
-One time check for status of location services. In case of error, fail callback will be executed.
-
-| Success callback parameter | Type      | Description                                          |
-|----------------------------|-----------|------------------------------------------------------|
-| `enabled`                  | `Boolean` | true/false (true when location services are enabled) |
 
 ### checkStatus(success, fail)
 
@@ -730,8 +673,10 @@ Keep in mind that the callback function lives in an isolated scope. Variables fr
 
 Following example requires [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) enabled backend server.
 
+**Warning:** callback function must by `async`!
+
 ```
-BackgroundGeolocation.headlessTask(function(event) {
+BackgroundGeolocation.headlessTask(async (event) => {
     if (event.name === 'location' ||
       event.name === 'stationary') {
         var xhr = new XMLHttpRequest();
@@ -739,10 +684,21 @@ BackgroundGeolocation.headlessTask(function(event) {
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify(event.params));
     }
-
-    return 'Processing event: ' + event.name; // will be logged
 });
 ```
+
+**Important:**
+
+After application is launched again (main activity becomes visible), it is important to call `start` method to rebind all event listeners.
+
+```
+BackgroundGeolocation.checkStatus(({ isRunning }) => {
+  if (isRunning) {
+    BackgroundGeolocation.start(); // service was running -> rebind all listeners
+  }
+});
+```
+
 
 ### Transforming/filtering locations in native code
 
@@ -755,22 +711,22 @@ Android example:
 When the `Application` is initialized (which also happens before services gets started in the background), write some code like this:
 
 ```
-BackgroundGeolocationFacade.setLocationTransform(new ILocationTransform() {
-            @Nullable
-            @Override
-            public BackgroundLocation transformLocationBeforeCommit(@NonNull Context context, @NonNull BackgroundLocation location) {
-                // `context` is available too if there's a need to use a value from preferences etc.
-                
-                // Modify the location
-                location.setLatitude(location.getLatitude() + 0.018);
-                
-                // Return modified location
-                return location;
-  
-                // You could return null to reject the location,
-                // or if you did something else with the location and the library should not post or save it.
-            }
-        }
+BackgroundGeolocationFacade.setLocationTransform(new LocationTransform() {
+    @Nullable
+    @Override
+    public BackgroundLocation transformLocationBeforeCommit(@NonNull Context context, @NonNull BackgroundLocation location) {
+    // `context` is available too if there's a need to use a value from preferences etc.
+
+    // Modify the location
+    location.setLatitude(location.getLatitude() + 0.018);
+
+    // Return modified location
+    return location;
+
+    // You could return null to reject the location,
+    // or if you did something else with the location and the library should not post or save it.
+    }
+});
 ```
 
 iOS example:
