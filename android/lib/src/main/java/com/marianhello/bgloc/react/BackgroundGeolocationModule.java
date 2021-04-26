@@ -188,6 +188,7 @@ public class BackgroundGeolocationModule extends ReactContextBaseJavaModule impl
         }
     }
 
+   
 
     @ReactMethod
     public void getCurrentLocation(final ReadableMap options, final Callback success, final Callback error) {
@@ -218,7 +219,7 @@ public class BackgroundGeolocationModule extends ReactContextBaseJavaModule impl
         });
     }
 
- 
+   
 
     @ReactMethod
     public void checkStatus(final Callback success, final Callback error) {
@@ -247,7 +248,9 @@ public class BackgroundGeolocationModule extends ReactContextBaseJavaModule impl
     }
 
     @ReactMethod
-    public void forceSync(Callback success, Callback error) {            
+    public void forceSync(Callback success, Callback error) {
+        //facade.forceSync();
+        success.invoke();
     }
 
     private void sendEvent(String eventName, Object params) {

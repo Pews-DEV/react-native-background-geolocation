@@ -6,7 +6,3 @@ Many thanks to all contributors
 * [codebling](https://github.com/codebling)
 * [pmwisdom](https://github.com/pmwisdom)
 * [dobrynia](https://github.com/dobrynia)
-
-# forker:
-
-* [bars0um](https://github.com/bars0um)

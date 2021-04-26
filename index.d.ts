@@ -426,7 +426,6 @@ export interface ServiceStatus {
   authorization: AuthorizationStatus;
 }
 
-
 export interface EventSubscription {
   remove(): void;
 }
@@ -651,8 +650,6 @@ export interface BackgroundGeolocationPlugin {
     success: (options: ConfigureOptions) => void,
     fail?: (error: BackgroundGeolocationError) => void
   ): void;
-
-  
 
   /**
    * Unregister all event listeners for given event.

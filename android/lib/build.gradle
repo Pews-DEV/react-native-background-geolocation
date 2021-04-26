@@ -28,7 +28,6 @@ apply plugin: 'com.android.library'
 
 apply from: '../common/VERSIONS.gradle'
 def hasApp = findProject(':app') != null
-def hasGradle3Support = getGradle3Support()
 
 // https://hackernoon.com/android-how-to-add-gradle-dependencies-using-foreach-c4cbcc070458
 def projDependencies = [
@@ -45,43 +44,6 @@ def projDependencies = [
     [configuration: "testImplementation", dependency: testLibs.robolectric],
     [configuration: "androidTestImplementation", dependency: testLibs.testRunner],
     [configuration: "androidTestImplementation", dependency: testLibs.testRules],
-]
-
-// https://hackernoon.com/android-how-to-add-gradle-dependencies-using-foreach-c4cbcc070458
-def oreoDependencies = [
-    [configuration: "androidTestImplementation", dependency: androidLibs.supportAnnotations],
-    [configuration: "androidTestImplementation", dependency: testLibs.testRunner],
-    [configuration: "androidTestImplementation", dependency: testLibs.testRules],
-    [configuration: "testImplementation", dependency: testLibs.junit],
-    [configuration: "testImplementation", dependency: testLibs.json],
-    [configuration: "testImplementation", dependency: testLibs.robolectric],
-    [configuration: "testImplementation", dependency: testLibs.mockitoCore],
-    [configuration: "implementation", dependency: androidLibs.playServicesLocation],
-    [configuration: "implementation", dependency: androidLibs.supportCompat],
-    [configuration: "implementation", dependency: androidLibs.appcompat],
-    [configuration: "implementation", dependency: libs.permissions,
-        options: { exclude group: 'com.android.support', module: 'appcompat-v7'}],
-    [configuration: "implementation", dependency: libs.logback],
-    [configuration: "implementation", dependency: libs.slf4j],
-    [configuration: "implementation", dependency: libs.promise],
-]
-
-def preoreoDependencies = [
-    [configuration: "androidTestCompile", dependency: androidLibs.supportAnnotations],
-    [configuration: "androidTestCompile", dependency: testLibs.testRunner],
-    [configuration: "androidTestCompile", dependency: testLibs.testRules],
-    [configuration: "testCompile", dependency: testLibs.junit],
-    [configuration: "testCompile", dependency: testLibs.json],
-    [configuration: "testCompile", dependency: testLibs.robolectric],
-    [configuration: "testCompile", dependency: testLibs.mockitoCore],
-    [configuration: "compile", dependency: androidLibs.playServicesLocation],
-    [configuration: "oreoCompile", dependency: androidLibs.supportCompat],
-    [configuration: "compile", dependency: androidLibs.appcompat],
-    [configuration: "compile", dependency: libs.permissions,
-        options: { exclude group: 'com.android.support', module: 'appcompat-v7'}],
-    [configuration: "compile", dependency: libs.logback],
-    [configuration: "compile", dependency: libs.slf4j],
-    [configuration: "compile", dependency: libs.promise],
 ]
 
 repositories {
@@ -120,18 +82,9 @@ android {
 }
 
 dependencies {
-    if (hasGradle3Support) {
-        implementation project(path: ':@bars0um_react-native-background-geolocation-common')
-
-        oreoDependencies.each {
-            add(it.configuration, it.dependency)
-        }
-    } else {
-        releaseCompile project(path: ':@bars0um_react-native-background-geolocation-common', configuration: "${projectFlavor}Release")
-        debugCompile project(path: ':@bars0um_react-native-background-geolocation-common', configuration: "${projectFlavor}Debug")
+    implementation project(path: ':@mauron85_react-native-background-geolocation-common')
 
     projDependencies.each {
         add(it.configuration, it.dependency)
     }
-}
 }

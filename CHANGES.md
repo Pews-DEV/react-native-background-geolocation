@@ -1,14 +1,5 @@
 ## Changelog
 
-
-### [0.6.3.1] - 2019-09-25
-### Fixed
-- Removed location providers / sqllite DAO/SQL tables for locations
-- Removed location Syncing Code
-- Removed permission requirement for SYNC_WRITE/READ
-- Removed permission requirement for Accounts 
-
-
 ### [0.6.3] - 2019-09-16
 ### Fixed
 - Android fix RejectedExecutionException (fixes #319 #259 #243 #149 #68)
