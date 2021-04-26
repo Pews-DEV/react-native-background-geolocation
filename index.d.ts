@@ -426,6 +426,23 @@ export interface ServiceStatus {
   authorization: AuthorizationStatus;
 }
 
+export interface LogEntry {
+  /** ID of log entry as stored in db. */
+  id: number;
+
+  /** Timestamp in milliseconds since beginning of UNIX epoch. */
+  timestamp: number;
+
+  /** Log level */
+  level: LogLevel;
+
+  /** Log message */
+  message: string;
+
+  /** Recorded stacktrace. (Android only, on iOS part of message) */
+  stackTrace: string;
+}
+
 export interface EventSubscription {
   remove(): void;
 }
@@ -648,6 +665,25 @@ export interface BackgroundGeolocationPlugin {
    */
   getConfig(
     success: (options: ConfigureOptions) => void,
+    fail?: (error: BackgroundGeolocationError) => void
+  ): void;
+
+  /**
+   * Return all logged events. Useful for plugin debugging.
+   *
+   * Platform: Android, iOS
+   *
+   * @param limit Limits number of returned entries.
+   * @param fromId Return entries after <code>fromId</code>. Useful if you plan to implement infinite log scrolling
+   * @param minLevel Available levels: ["TRACE", "DEBUG", "INFO", "WARN", "ERROR"]
+   * @param success
+   * @param fail
+   */
+  getLogEntries(
+    limit: number,
+    fromId: number,
+    minLevel: LogLevel,
+    success: (entries: LogEntry[]) => void,
     fail?: (error: BackgroundGeolocationError) => void
   ): void;
 

@@ -188,7 +188,53 @@ public class BackgroundGeolocationModule extends ReactContextBaseJavaModule impl
         }
     }
 
-   
+    @ReactMethod
+    public void getLocations(final Callback success, final Callback error) {
+        runOnBackgroundThread(new Runnable() {
+            public void run() {
+                WritableArray locationsArray = Arguments.createArray();
+                Collection<BackgroundLocation> locations = facade.getLocations();
+                for (BackgroundLocation location : locations) {
+                    locationsArray.pushMap(LocationMapper.toWriteableMapWithId(location));
+                }
+                success.invoke(locationsArray);
+            }
+        });
+    }
+
+    @ReactMethod
+    public void getValidLocations(final Callback success, Callback error) {
+        runOnBackgroundThread(new Runnable() {
+            public void run() {
+                WritableArray locationsArray = Arguments.createArray();
+                Collection<BackgroundLocation> locations = facade.getValidLocations();
+                for (BackgroundLocation location : locations) {
+                    locationsArray.pushMap(LocationMapper.toWriteableMapWithId(location));
+                }
+                success.invoke(locationsArray);
+            }
+        });
+    }
+
+    @ReactMethod
+    public void deleteLocation(final Integer locationId, final Callback success, Callback error) {
+        runOnBackgroundThread(new Runnable() {
+            public void run() {
+                facade.deleteLocation(locationId.longValue());
+                success.invoke(true);
+            }
+        });
+    }
+
+    @ReactMethod
+    public void deleteAllLocations(final Callback success, Callback error) {
+        runOnBackgroundThread(new Runnable() {
+            public void run() {
+                facade.deleteAllLocations();
+                success.invoke(true);
+            }
+        });
+    }
 
     @ReactMethod
     public void getCurrentLocation(final ReadableMap options, final Callback success, final Callback error) {
@@ -219,7 +265,30 @@ public class BackgroundGeolocationModule extends ReactContextBaseJavaModule impl
         });
     }
 
-   
+    @ReactMethod
+    public void getLogEntries(final Integer limit, final Integer offset, final String minLevel, final Callback success, final Callback error) {
+        runOnBackgroundThread(new Runnable() {
+            public void run() {
+                WritableArray logEntriesArray = Arguments.createArray();
+                Collection<LogEntry> logEntries = facade.getLogEntries(limit, offset, minLevel);
+                for (LogEntry logEntry : logEntries) {
+                    WritableMap out = Arguments.createMap();
+                    out.putInt("id", logEntry.getId());
+                    out.putInt("context", logEntry.getContext());
+                    out.putString("level", logEntry.getLevel());
+                    out.putString("message", logEntry.getMessage());
+                    out.putString("timestamp", new Long(logEntry.getTimestamp()).toString());
+                    out.putString("logger", logEntry.getLoggerName());
+                    if (logEntry.hasStackTrace()) {
+                        out.putString("stackTrace", logEntry.getStackTrace());
+                    }
+
+                    logEntriesArray.pushMap(out);
+                }
+                success.invoke(logEntriesArray);
+            }
+        });
+    }
 
     @ReactMethod
     public void checkStatus(final Callback success, final Callback error) {
@@ -249,7 +318,7 @@ public class BackgroundGeolocationModule extends ReactContextBaseJavaModule impl
 
     @ReactMethod
     public void forceSync(Callback success, Callback error) {
-        //facade.forceSync();
+        facade.forceSync();
         success.invoke();
     }
 

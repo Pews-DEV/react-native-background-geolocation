@@ -1,13 +1,3 @@
-
-
-# All credit due to
-@mauron85/react-native-background-geolocation
-
-# Fork purpose
-
-This is a fork to slim down the library for only specific functions (mainly remove the syncing code and server communication bit)
-
-
 # @mauron85/react-native-background-geolocation
 
 [![CircleCI](https://circleci.com/gh/mauron85/react-native-background-geolocation/tree/master.svg?style=shield)](https://circleci.com/gh/mauron85/react-native-background-geolocation/tree/master)
@@ -16,6 +6,12 @@ This is a fork to slim down the library for only specific functions (mainly remo
 ## We're moving
 
 Npm package is now [@mauron85/react-native-background-geolocation](https://www.npmjs.com/package/@mauron85/react-native-background-geolocation)!
+
+# Donation
+
+Please support my work and continued development with your donation.
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6GW8FPTE6TV5J)
 
 ## Submitting issues
 
