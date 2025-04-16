@@ -24,18 +24,18 @@
   "_spec": "@mauron85/react-native-background-geolocation@0.6.3",
   "_where": "/Users/dimo/panmed/dev/viaDriveThru",
   "author": {
-    "name": "Marian Hello"
+    "name": "Pews DEV"
   },
   "bugs": {
-    "url": "https://github.com/mauron85/react-native-background-geolocation/issues"
+    "url": "https://github.com/Pews-DEV/react-native-background-geolocation/issues"
   },
   "bundleDependencies": false,
   "dependencies": {
     "plist": "^3.0.1"
   },
   "deprecated": false,
-  "description": "optimized background location tracking",
-  "homepage": "https://github.com/mauron85/react-native-background-geolocation#readme",
+  "description": "Optimized background location tracking",
+  "homepage": "https://github.com/Pews-DEV/react-native-background-geolocation#readme",
   "keywords": [
     "gps",
     "geolocation",
@@ -51,18 +51,18 @@
   ],
   "license": "Apache-2.0",
   "main": "./index.js",
-  "name": "@mauron85/react-native-background-geolocation",
+  "name": "@Pews-DEV/react-native-background-geolocation",
   "peerDependencies": {
     "react-native": ">=0.60.5"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mauron85/react-native-background-geolocation.git"
+    "url": "git+https://github.com/Pews-DEV/react-native-background-geolocation.git"
   },
   "scripts": {
-    "link": "@mauron85/react-native-background-geolocation/scripts/postlink.js",
+    "link": "@Pews-DEV/react-native-background-geolocation/scripts/postlink.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "unlink": "@mauron85/react-native-background-geolocation/scripts/postunlink.js"
+    "unlink": "@Pews-DEV/react-native-background-geolocation/scripts/postunlink.js"
   },
   "types": "./index.d.ts",
   "version": "0.6.3"
